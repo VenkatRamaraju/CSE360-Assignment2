@@ -49,15 +49,24 @@ public class SimpleList {
 
     public void add(int n) {
 
-        if (count < 10) {
-            count++; // One element is being added to the list
-        }
+        count++;
 
-            for (int index = count-1; index > 0; index--) {
-                list[index] = list[index-1]; // Shifting element positions right
+        if (count > list.length) { // To see if additional space is needed
+            int newLength = (list.length) + (list.length/2); // 50% increase
+            int[] extendedList = new int[newLength];
+
+            for (int i = 0; i < list.length; i++) {
+                extendedList[i] = list[i]; // Copying array elements
             }
 
-            list[0] = n;
+            list = extendedList;
+        }
+
+         for (int index = count - 1; index > 0; index--) {
+            list[index] = list[index - 1]; // Shifting element positions right
+        }
+
+        list[0] = n;
     }
 
     /**
@@ -83,6 +92,20 @@ public class SimpleList {
                 count--; // One element lost from the list
             }
         }
+
+        boolean freeSpace = ((int) (list.length*.75)) >= count;
+
+        if (freeSpace) {
+            int newLength = (int) (list.length*.75); // 25% decrease in size
+            int[] extendedList = new int[newLength];
+
+            for (int i = 0; i < count; i++) {
+                extendedList[i] = list[i]; // Copying array elements
+            }
+
+            list = extendedList;
+        }
+
     }
 
     /**

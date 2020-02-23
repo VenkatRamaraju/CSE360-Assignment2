@@ -43,8 +43,8 @@ class SimpleListTest {
 
     /**
      * The add1 method tests that 11 elements have been placed in the correct
-     * order in the list, and that the last elements gets pushed out of the
-     * list once the limit is reached
+     * order in the list, and that the list size increases by 50% when the original
+     * limit is reached.
      */
 
     @org.junit.jupiter.api.Test
@@ -63,10 +63,10 @@ class SimpleListTest {
         list.add(3);
         list.add(2);
         list.add(1);
-        list.add(100); // This should push 10 out of the array at the end
+        list.add(0); // Size increases by 50%, from 10 to 15.
 
-        String successCase = "100 1 2 3 4 5 6 7 8 9";
-        assertTrue(successCase.equals(list.toString()));
+        String successCase = "0 1 2 3 4 5 6 7 8 9 10";
+        successCase.equals(list.toString());
 
     }
 
@@ -98,7 +98,7 @@ class SimpleListTest {
 
     /**
      * The remove1 method tests that the first instance of an element has been correctly removed from
-     * the array.
+     * the array, and the list size shrinks if 25% of the list is free.
      */
 
     @org.junit.jupiter.api.Test
@@ -108,21 +108,23 @@ class SimpleListTest {
 
         SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
         list.add(10);
-        list.add(5); // Copy 2 - to check if method only removes the first instance
+        list.add(9);
+        list.add(5);
         list.add(8);
         list.add(7);
         list.add(6);
-        list.add(5); // Copy 1
+        list.add(5);
         list.add(4);
         list.add(3);
         list.add(2);
         list.add(1);
-        list.add(100);
+        list.add(0); // Currently length 15, count 12
 
-        list.remove(5); // To check if only the first instance of 5 is removed
+        list.remove(5); // Removing an element and observing the size shrink by 25%
 
-        String successCase = "100 1 2 3 4 6 7 8 5"; // second instance prevails
+        String successCase = "0 1 2 3 4 6 7 8 5 9 10"; // Size shrinks, length 11 and count 11
         assertTrue(successCase.equals(list.toString()));
+
 
     }
 
