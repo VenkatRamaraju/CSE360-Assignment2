@@ -399,8 +399,6 @@ class SimpleListTest {
 
     }
 
-
-
     /**
      * The first1 method tests that the first element of a list is returned correctly.
      */
