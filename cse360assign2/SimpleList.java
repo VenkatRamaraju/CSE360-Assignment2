@@ -2,10 +2,11 @@
  *
  * @author - Venkat Ramaraju
  * Class ID: 247
- * CSE 360 - Assignment 1
+ * CSE 360 - Assignment 2
  *
- * SimpleList is represents an array of maximum size 10, with functionality to add,
- * remove, search and display the contents of the list dynamically.
+ * SimpleList is represents an array of initialized to size 10, with functionality to expand and
+ * shrink the list size based on the number of elements in the list. It has features of add,
+ * remove, count, search, append, first, size.
  */
 
 package cse360assign2; // package to organize the classes
@@ -27,7 +28,6 @@ public class SimpleList {
     /**
      * The constructor of this class initializes the list to an array of length 10,
      * and sets the initial element count to zero.
-     *
      */
 
 
@@ -41,8 +41,8 @@ public class SimpleList {
 
     /**
      * The add method places the parameter integer at the beginning of the list
-     * and shifts every subsequent element right by one. If the size of the array
-     * is already 10, it will push the last element out.
+     * and shifts every subsequent element right by one. If the size of the array exceeds
+     * its maximum length, it expands by 50%.
      *
      * @param n integer value to be added at the first index of the list
      */
@@ -52,7 +52,7 @@ public class SimpleList {
         count++;
 
         if (count > list.length) { // To see if additional space is needed
-            int newLength = (list.length) + (list.length/2); // 50% increase
+            int newLength = (list.length) + (list.length / 2); // 50% increase
             int[] extendedList = new int[newLength];
 
             for (int i = 0; i < list.length; i++) {
@@ -62,7 +62,7 @@ public class SimpleList {
             list = extendedList;
         }
 
-         for (int index = count - 1; index > 0; index--) {
+        for (int index = count - 1; index > 0; index--) {
             list[index] = list[index - 1]; // Shifting element positions right
         }
 
@@ -70,8 +70,9 @@ public class SimpleList {
     }
 
     /**
-     * The remove method will search fo the parameter in the list, and will remove it. It shifts
-     * all the subsequent instances left by one, and adjusts the count accordingly.
+     * The remove method will remove the given element from the list, and then check if
+     * there is at least 25% free space in the list. If yes, it will shrink the size of the array
+     * by 25%.
      *
      * @param n element to be searched for and removed from the list
      */
@@ -85,18 +86,19 @@ public class SimpleList {
             if (list[index] == n) { // Searching for element
                 found = true;
 
-                for (int shift = index+1; shift < count; shift++) {
-                    list[shift-1] = list[shift]; // Shifting remaining elements left
+                for (int shift = index + 1; shift < count; shift++) {
+                    list[shift - 1] = list[shift]; // Shifting remaining elements left
                 }
 
                 count--; // One element lost from the list
             }
         }
 
-        boolean freeSpace = ((int) (list.length*.75)) >= count;
+        int freeLength =  (int) (list.length *.25);
+        boolean freeSpace = (list.length-freeLength) >= count; // To check if 25% is free to reduce size
 
-        if (freeSpace) {
-            int newLength = (int) (list.length*.75); // 25% decrease in size
+        if (freeSpace) { // Expanding thee array size
+            int newLength = list.length - freeLength;
             int[] extendedList = new int[newLength];
 
             for (int i = 0; i < count; i++) {
@@ -133,7 +135,7 @@ public class SimpleList {
 
 
         for (int index = 0; index < count; index++) {
-            if (index == count-1) {
+            if (index == count - 1) {
                 result += list[index]; // No trailing space
             } else {
                 result += list[index] + " ";
@@ -166,4 +168,54 @@ public class SimpleList {
 
         return index;
     }
+
+    /**
+     * The append method will add an element to the end of a list and increment the count.
+     * If the list is full, it will increase the size and place the element at the end.
+     *
+     * @param n is the value that is to be appended at the end of the list
+     */
+
+
+    public void append(int n) {
+        count++;
+
+        if (count > list.length) { // To see if additional space is needed
+            int newLength = (list.length) + (list.length / 2); // 50% increase
+            int[] extendedList = new int[newLength];
+
+            for (int i = 0; i < list.length; i++) {
+                extendedList[i] = list[i]; // Copying array elements
+            }
+
+            list = extendedList;
+        }
+
+        list[count - 1] = n;
+    }
+
+    /**
+     *  The first method returns the first element in the array, at index 0.
+     *
+     * @return The first element in the list
+     */
+
+    public int first() {
+        if (count == 0) {
+            return -1; // No elements in the list
+        }
+
+        return list[0]; // First element in the list
+    }
+
+    /**
+     * The size method returns the number of possible locations in the list
+     *
+     * @return Length of the list
+     */
+
+    public int size() {
+        return list.length; // Size of the list, expandable and shrinkable
+    }
 }
+

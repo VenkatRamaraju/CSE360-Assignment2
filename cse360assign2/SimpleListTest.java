@@ -2,7 +2,7 @@
  *
  * @author - Venkat Ramaraju
  * Class ID: 247
- * CSE 360 - Assignment 1
+ * CSE 360 - Assignment 2
  *
  * SimpleListTest is a JUnit file that performs tests on every method that is
  * implemented in the SimpleTest.java file
@@ -42,6 +42,18 @@ class SimpleListTest {
     }
 
     /**
+     * The SimpleList3 method checks that an empty list has a toString value of ""
+     */
+
+    @org.junit.jupiter.api.Test
+    void SimpleList3() {
+
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+
+        assertTrue("".equals(list.toString()));
+    }
+
+    /**
      * The add1 method tests that 11 elements have been placed in the correct
      * order in the list, and that the list size increases by 50% when the original
      * limit is reached.
@@ -65,13 +77,14 @@ class SimpleListTest {
         list.add(1);
         list.add(0); // Size increases by 50%, from 10 to 15.
 
-        String successCase = "0 1 2 3 4 5 6 7 8 9 10";
+        String successCase = "0 1 2 3 4 5 6 7 8 9 10"; // Size 15, count 11
         successCase.equals(list.toString());
 
     }
 
     /**
-     * The add2 method tests that the add method fails to assert "true" for an incorrect input
+     * The add2 method tests that the add method fails to assert "true" for an incorrect input,
+     * and checks that the adding has been done in the correct order.
      */
 
     @org.junit.jupiter.api.Test
@@ -87,18 +100,14 @@ class SimpleListTest {
         list.add(6);
         list.add(5);
         list.add(4);
-        list.add(3);
-        list.add(2);
-        list.add(1);
-        list.add(100); // This should push 10 out of the array at the end
 
-        String failCase = "1 2 3 4 5 6 7 8 9 10"; // To ensure that 100 gets placed correctly
-        assertFalse(failCase.equals(list.toString())); // Ensure that 10 gets pushed out
+        String failCase = "10 9 8 7 6 5 4"; // To ensure the order of elements is NOT this
+        assertFalse(failCase.equals(list.toString()));
     }
 
     /**
      * The remove1 method tests that the first instance of an element has been correctly removed from
-     * the array, and the list size shrinks if 25% of the list is free.
+     * the array, and the list size shrinks if 25% of the list is empty.
      */
 
     @org.junit.jupiter.api.Test
@@ -107,9 +116,9 @@ class SimpleListTest {
         // Testing for success case
 
         SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+        list.add(11);
         list.add(10);
         list.add(9);
-        list.add(5);
         list.add(8);
         list.add(7);
         list.add(6);
@@ -122,7 +131,7 @@ class SimpleListTest {
 
         list.remove(5); // Removing an element and observing the size shrink by 25%
 
-        String successCase = "0 1 2 3 4 6 7 8 5 9 10"; // Size shrinks, length 11 and count 11
+        String successCase = "0 1 2 3 4 6 7 8 9 10 11"; // Size shrinks, length 12 and count 11
         assertTrue(successCase.equals(list.toString()));
 
 
@@ -144,7 +153,7 @@ class SimpleListTest {
         list.add(2);
         list.add(1);
 
-        list.remove(6); // To check if only the first instance of 5 is removed
+        list.remove(70); // To check a number that is NOT on the list
 
         String successCase = "1 2 3 4 5";
         assertTrue(successCase.equals(list.toString()));
@@ -265,7 +274,7 @@ class SimpleListTest {
         newList.add(6);
 
 
-        String failCase = "6 7 8 9 10 "; // wrong output (space after last element) to test failed case
+        String failCase = "6 7 8 9 10 "; // wrong output (trailing space) to test failed case
         assertFalse(failCase.equals(newList.toString()));
     }
 
@@ -349,4 +358,142 @@ class SimpleListTest {
         assertFalse(1 == newList.search(8)); // should be found at index 2, not 1
     }
 
+    /**
+     * The append1 method tests that an element has been correctly appended to the end of a list.
+     */
+
+    @org.junit.jupiter.api.Test
+    void append1() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+        newList.append(1);
+        newList.append(2);
+        newList.append(3);
+        newList.append(4);
+        newList.append(5);
+        newList.append(6);
+        newList.append(7);
+
+
+        String successCase = "1 2 3 4 5 6 7";
+        assertTrue(successCase.equals(newList.toString()));
+
+    }
+
+    /**
+     * The append2 method tests that a combination of adding and appending remains in correct order in
+     * the list.
+     */
+
+    @org.junit.jupiter.api.Test
+    void append2() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+        newList.add(2);
+        newList.append(3);
+        newList.add(1); // Adding and appending in different orders
+        newList.append(4);
+        newList.add(0);
+        newList.append(5);
+
+        String successCase = "0 1 2 3 4 5";
+        assertTrue(successCase.equals(newList.toString()));
+
+    }
+
+
+
+    /**
+     * The first1 method tests that the first element of a list is returned correctly.
+     */
+
+    @org.junit.jupiter.api.Test
+    void first1() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+        newList.add(4);
+        newList.add(3);
+        newList.add(2);
+        newList.add(1);
+        newList.append(5);
+        newList.append(6);
+        newList.append(7);
+        newList.append(8);
+        newList.append(9);
+        newList.append(10);
+
+        assertTrue(1 == newList.first());
+    }
+
+    /**
+     * The first2 method tests that the first method returns -1 when no elements are in the list
+     */
+
+    @org.junit.jupiter.api.Test
+    void first2() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+
+        assertTrue(-1 == newList.first());
+    }
+
+    /** The first3 method tests that the first element is correctly returned after some operations
+     * are performed on the list
+     */
+
+    @org.junit.jupiter.api.Test
+    void first3() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+        newList.add(4);
+        newList.add(3);
+        newList.add(2);
+        newList.add(1);
+        newList.append(5);
+        newList.remove(1);
+
+        assertTrue(2 == newList.first());
+    }
+
+    /**
+     * The size1 method tests that the total possible size of the list is correctly returned.
+     */
+
+    @org.junit.jupiter.api.Test
+    void size1() {
+        SimpleList newList = new SimpleList(); // Creating a simple list with elements to test method
+        newList.add(4);
+        newList.add(3);
+        newList.add(2);
+        newList.add(1);
+        newList.append(5);
+        newList.append(6);
+        newList.append(7);
+        newList.append(8);
+        newList.append(9);
+        newList.append(10);
+        newList.add(11); // Size changes from 10 to 15 (Increase by 50% every time limit is reached)
+
+        assertTrue(15 == newList.size());
+    }
+
+    /**
+     * The size2 method tests that the total possible size of the list is correctly returned after
+     * performing some operations on the list.
+     */
+
+    @org.junit.jupiter.api.Test
+    void size2() {
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+        list.add(10);
+        list.add(9);
+        list.add(8);
+        list.add(7);
+        list.add(6);
+        list.add(5);
+        list.add(4);
+        list.add(3);
+        list.add(2);
+        list.add(1);
+        list.remove(5);
+        list.remove(4);
+        list.remove(3); // Size shrinks from 10 to 8, and it holds 7 integers
+
+        assertTrue(8 == list.size()); // after expanding and shrinking the array
+    }
 }
