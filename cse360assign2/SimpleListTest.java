@@ -100,6 +100,16 @@ class SimpleListTest {
         list.add(6);
         list.add(5);
         list.add(4);
+        list.add(2);
+        list.remove(2);
+        list.remove(4);
+        list.remove(5);
+        list.remove(6);
+        list.remove(7);
+        list.remove(8);
+        list.remove(9);
+        list.remove(10);
+
 
         String failCase = "10 9 8 7 6 5 4"; // To ensure the order of elements is NOT this
         assertFalse(failCase.equals(list.toString()));
@@ -186,6 +196,24 @@ class SimpleListTest {
 
         String failureCase = "100 1 2 3 4 6 7 9"; // would be true if both instances got removed
         assertFalse(failureCase.equals(list.toString()));
+    }
+
+    /**
+     * The remove4 method tests that the list must have a minimum of one entry, and can never be zero, as
+     * per the specification
+     */
+
+    @org.junit.jupiter.api.Test
+    void remove4() {
+        // Testing for failure case
+
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+        list.add(10);
+        list.add(9);
+        list.remove(9);
+        list.remove(10);
+
+        assertTrue(1 == list.count()); // Cant have less than one entry
     }
 
     /**
@@ -493,5 +521,53 @@ class SimpleListTest {
         list.remove(3); // Size shrinks from 10 to 8, and it holds 7 integers
 
         assertTrue(8 == list.size()); // after expanding and shrinking the array
+    }
+
+    /**
+     * The last1 method tests that the last element in the list is returned.
+     */
+
+    @org.junit.jupiter.api.Test
+    void last1() {
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+        list.add(10);
+        list.add(9);
+        list.add(8);
+        list.add(7);
+        list.add(6);
+        list.add(5);
+        list.add(4);
+        list.add(3);
+
+
+        assertTrue(10 == list.last()); // last element in the array
+    }
+
+    /**
+     * The last2 method tests that -1 is returned since there is no element in the list.
+     */
+
+    @org.junit.jupiter.api.Test
+    void last2() {
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+
+        assertTrue(-1 == list.last()); // last element in the array
+    }
+
+    /**
+     * The last3 method tests that the correct last element is returned after
+     */
+
+    @org.junit.jupiter.api.Test
+    void last3() {
+        SimpleList list = new SimpleList(); // Creating a simple list with elements to test method
+        list.add(10);
+        list.add(9);
+        list.add(8);
+        list.add(7);
+        list.remove(7);
+        list.remove(8);
+
+        assertTrue(10 == list.last()); // last element in the array
     }
 }
